@@ -1,14 +1,18 @@
 package todo
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type todotype interface {
 	AddTodo(str string) error
-	RemoveTodo(str string) error
-	ListTodo() []string
+	RemoveTodo(id int) error
+	ListTodo()
 }
 
 type item struct {
+	Id         int
 	Task       string
 	Complete   bool
 	UpodatedAt time.Time
@@ -22,21 +26,24 @@ func Service() todotype {
 }
 
 func (td *todoList) AddTodo(str string) error {
+	td.LoadFromJson()
 	newItem := item{
+		Id:         td.AddnewId(),
 		Task:       str,
 		Complete:   true,
 		UpodatedAt: time.Now(),
 	}
 
 	td.todoStore = append(td.todoStore, newItem)
+
 	td.SavetoJson()
 	return nil
 }
-func (td *todoList) RemoveTodo(str string) error {
-
+func (td *todoList) RemoveTodo(id int) error {
+	td.LoadFromJson()
 	for key, v := range td.todoStore {
 
-		if v.Task == str {
+		if v.Id == id {
 			td.todoStore = append(td.todoStore[:key], td.todoStore[key+1:]...)
 		}
 
@@ -45,13 +52,13 @@ func (td *todoList) RemoveTodo(str string) error {
 	return nil
 }
 
-func (td *todoList) ListTodo() []string {
-
+func (td *todoList) ListTodo() {
+	td.LoadFromJson()
 	var list = []string{}
 	for _, v := range td.todoStore {
 
 		list = append(list, v.Task)
 
 	}
-	return list
+	fmt.Printf("All list todos :%v", list)
 }
