@@ -14,9 +14,9 @@ func main() {
 	// add
 
 	fmt.Println(newservice.AddTodo("temp"))
-	fmt.Println(newservice.AddTodo("Akash"))
+	fmt.Println(newservice.AddTodo("test"))
 
-	fmt.Println(newservice.RemoveTodo("Akash"))
+	fmt.Println(newservice.RemoveTodo("test"))
 	fmt.Println(newservice.ListTodo())
 
 }

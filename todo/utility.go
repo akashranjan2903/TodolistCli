@@ -9,7 +9,7 @@ import (
 )
 
 func (t todoList) SavetoJson() {
-	// create file
+	// create files
 	filename := "db.json"
 	err := checkFile(filename)
 	if err != nil {
